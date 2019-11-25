@@ -51,18 +51,11 @@ def print_board(board):
     print('\u203e' * (2 * n + 1))
 
 
-def remove_all_attacks(board, row_idx, col_idx):
+def disable_unsafe_cells_in_board(board, row_idx, col_idx):
     n = len(board[0])
     for attack in get_all_attacking_moves(n, row_idx, col_idx):
         for k in attack.keys():
-            board[k][attack[k]] = False
-
-
-def add_all_attacks(board, row_idx, col_idx):
-    n = len(board[0])
-    for attack in get_all_attacking_moves(n, row_idx, col_idx):
-        for k in attack.keys():
-            board[k][attack[k]] = 0
+            board[k][attack[k]] = -1
 
 
 def get_all_attacking_moves(n, row_idx, col_idx):
@@ -89,3 +82,10 @@ def get_all_attacking_moves(n, row_idx, col_idx):
         j += 1
 
     return attacking_moves
+
+
+def clear_board_from_attacks(board):
+    for r_i, row in enumerate(board):
+        for c_i, cell in enumerate(row):
+            if cell == -1:
+                board[r_i][c_i] = 0
