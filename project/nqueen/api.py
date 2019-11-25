@@ -1,3 +1,5 @@
+import numpy
+
 def is_safe(board, r_idx, c_idx):
     # since the board is squared, we can just take the len of element 0
     n = len(board[0])
@@ -27,7 +29,15 @@ def is_safe(board, r_idx, c_idx):
 
 
 def generate_empty_board(n):
-    return [[0 for x in range(n)] for y in range(n)]
+    return numpy.zeros((n, n), numpy.int32)
+
+
+def generate_all_coordinates(n):
+    coords = []
+    for rows in range(n):
+        for columns in range(n):
+            coords.append((rows, columns))
+    return coords
 
 
 def print_board(board):
