@@ -11,7 +11,7 @@ def solve(board, n, attacks, col_idx):
     for row_idx in range(n):
         if board[row_idx][col_idx] != -1 and is_safe(board, row_idx, col_idx):
             board[row_idx][col_idx] = 1
-            remove_all_attacks(board, row_idx, col_idx)
+            disable_unsafe_cells_in_board(board, row_idx, col_idx)
             if solve(board, n, attacks, col_idx + 1):                # board to False and check in the next iteration
                 return True
 
