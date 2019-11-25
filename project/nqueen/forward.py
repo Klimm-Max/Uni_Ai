@@ -2,26 +2,26 @@ import cProfile
 from project.nqueen.api import *
 
 
-def solve(board, n, attacks, col_idx):
+def solve(board, n, col_idx):
     if col_idx is n:
         clear_board_from_attacks(board)
         print_board(board)
         return
 
     for row_idx in range(n):
-        if board[row_idx][col_idx] != -1 and is_safe(board, row_idx, col_idx):
+        if board[row_idx][col_idx] != -1 and is_safe(board, row_idx, col_idx):  # unsafe cells from previous placements
             board[row_idx][col_idx] = 1
-            disable_unsafe_cells_in_board(board, row_idx, col_idx)
-            if solve(board, n, attacks, col_idx + 1):                # board to False and check in the next iteration
+            disable_unsafe_cells_in_board(board, row_idx, col_idx)              # all unsafe cells from this queen = -1
+            if solve(board, n, col_idx + 1):
                 return True
 
-        board[row_idx][col_idx] = 0                         # disabled cells by setting all their values to 0 again
+        board[row_idx][col_idx] = 0                             # disabled cells by setting all their values to 0 again
 
     return False
 
 
 dimension = 4
-cProfile.run('solve(generate_empty_board(dimension), dimension, [], 0)')
+cProfile.run('solve(generate_empty_board(dimension), dimension, 0)')
 """
 29699376 function calls (28888680 primitive calls) in 40.713 seconds
 
