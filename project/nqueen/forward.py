@@ -1,20 +1,26 @@
-from project.nqueen.api import is_safe, generate_empty_board, print_board
+import cProfile
+from project.nqueen.api import *
 
 
-def solve(board, col):
-    if col is n:                                    # this will only be reached if all queens have been placed and we
-        print_board(board)                          # move to the outer of the chess
+def solve(board, n, col_idx):
+    """this approach got improved since placing a queen will lead to disabling all here attacking moves
+    which reduces the number of iterations"""
+    if col_idx is n:
+        print_board(board)
         return
 
-    for row_idx in range(n):                        # for each row try to place the queens
-        if is_safe(board, row_idx, col):
-            board[row_idx][col] = 1
-            if solve(board, col+1):                 # increase the column by 1 and try again to place all queens
-                return True                         # this is very important because if there is no possible solution
-        board[row_idx][col] = 0                     # the callee will return here and revert his placed queen
+    for row_idx in range(n):
+        if board[row_idx][col_idx] is not False and is_safe(board, row_idx, col_idx):
+            board[row_idx][col_idx] = 1
+            remove_all_attacks(board, row_idx, col_idx)     # setting all the attack moves of the current queen in the
+            if solve(board, n, col_idx + 1):                # board to False and check in the next iteration
+                return True
+
+        add_all_attacks(board, row_idx, col_idx)            # in the backtracking, we need to restore the previously
+        board[row_idx][col_idx] = 0                         # disabled cells by setting all their values to 0 again
 
     return False
 
 
-n = 4
-solve(generate_empty_board(n), 0)
+dimension = 10
+cProfile.run('solve(generate_empty_board(dimension), dimension, 0)')
