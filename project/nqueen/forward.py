@@ -1,5 +1,6 @@
 import cProfile
-from project.nqueen.api import *
+from project.nqueen.api import generate_empty_board, clear_board_from_attacks, \
+    print_board, is_safe, disable_unsafe_cells_in_board
 
 
 def solve(board, n, col_idx):
@@ -20,10 +21,10 @@ def solve(board, n, col_idx):
     return False
 
 
-dimension = 4
+dimension = 12
 cProfile.run('solve(generate_empty_board(dimension), dimension, 0)')
 """
-29699376 function calls (28888680 primitive calls) in 40.713 seconds
+29 699 376 function calls (28888680 primitive calls) in 40.713 seconds
 
    Ordered by: standard name
 
@@ -50,7 +51,7 @@ cProfile.run('solve(generate_empty_board(dimension), dimension, 0)')
 
 """
 =========================== RECURSIVE =====================================
-   24017530 function calls (23161342 primitive calls) in 47.140 seconds
+   2 4017 530 function calls (23161342 primitive calls) in 47.140 seconds
 
    Ordered by: standard name
 

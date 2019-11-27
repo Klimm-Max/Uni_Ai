@@ -2,7 +2,8 @@ import numpy
 
 
 def is_safe(board, r_idx, c_idx):
-    # since the board is squared, we can just take the len of element 0
+    """checking if a certain cell is safe but just considering the left-side of the board"""
+    # since the board is squared, we can just take the len of the first row
     n = len(board[0])
 
     # check if there is any Queen on the same row
@@ -33,16 +34,8 @@ def generate_empty_board(n):
     return numpy.zeros((n, n), numpy.int32)
 
 
-def generate_all_coordinates(n):
-    coords = []
-    for rows in range(n):
-        for columns in range(n):
-            coords.append(dict([(rows, columns)]))
-    return coords
-
-
 def print_board(board):
-    # since the board is squared, we can just take the len of element 0
+    # since the board is squared, we can just take the len of the first row
     n = len(board[0])
 
     print('_' * (2*n+1))
@@ -60,22 +53,21 @@ def disable_unsafe_cells_in_board(board, row_idx, col_idx):
 
 def get_all_attacking_moves(n, row_idx, col_idx):
     attacking_moves = []
-
-    # remove all attacking positions from the queen on the upper-right diagonal
+    # calc all attacking positions from this queen on the upper-right diagonal
     i, j = row_idx, col_idx
     while i > 0 and j < n-1:
         attacking_moves.append(dict([(i-1, j+1)]))
         i -= 1
         j += 1
 
-    # remove all attacking positions from the queen on the lower-right diagonal
+    # calc all attacking positions from the queen on the lower-right diagonal
     i, j = row_idx, col_idx
     while i < n - 1 and j < n - 1:
         attacking_moves.append(dict([(i + 1, j + 1)]))
         i += 1
         j += 1
 
-    # remove all attacking positions in the same row (to the right)
+    # calc all attacking positions in the same row (to the right)
     j = col_idx
     while j < n - 1:
         attacking_moves.append(dict([(row_idx, j+1)]))
