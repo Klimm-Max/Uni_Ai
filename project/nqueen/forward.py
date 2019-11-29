@@ -1,5 +1,5 @@
 import cProfile
-from project.nqueen.api import *
+from project.nqueen.functions import *
 
 
 def solve(board, n, col_idx):
@@ -20,6 +20,6 @@ def solve(board, n, col_idx):
     return False
 
 
-dimension = 10
+dimension = 12
 brd = generate_empty_board(dimension)
 cProfile.run('solve(brd, dimension, 0)')

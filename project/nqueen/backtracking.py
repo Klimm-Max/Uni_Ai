@@ -1,5 +1,5 @@
 import cProfile
-from project.nqueen.api import is_safe, generate_empty_board, print_board
+from project.nqueen.functions import is_safe, generate_empty_board, print_board
 
 
 def solve(board, n, col_idx):
