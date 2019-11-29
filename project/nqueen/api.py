@@ -31,7 +31,10 @@ def is_safe(board, r_idx, c_idx):
 
 
 def generate_empty_board(n):
-    return numpy.zeros((n, n), numpy.int32)
+    board = [0] * n
+    for i in range(n):
+        board[i] = [0] * n
+    return board
 
 
 def print_board(board):
