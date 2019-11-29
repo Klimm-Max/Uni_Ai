@@ -18,5 +18,5 @@ def solve(board, n, col_idx):
 
 
 dimension = 10
-bo = generate_empty_board(dimension)
+brd = generate_empty_board(dimension)
 cProfile.run('solve(bo, dimension, 0)')
