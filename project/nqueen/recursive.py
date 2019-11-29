@@ -19,4 +19,4 @@ def solve(board, n, col_idx):
 
 dimension = 10
 brd = generate_empty_board(dimension)
-cProfile.run('solve(bo, dimension, 0)')
+cProfile.run('solve(brd, dimension, 0)')
