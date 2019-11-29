@@ -1,16 +1,8 @@
-import numpy
-
-
-def is_safe(board, r_idx, c_idx):
-    """checking if a certain cell is safe but just considering the left-side of the board"""
-    # since the board is squared, we can just take the len of the first row
-    n = len(board[0])
-
+def is_safe(board, n, r_idx, c_idx):
     # check if there is any Queen on the same row
     for i in range(c_idx):
         if board[r_idx][i] == 1:
             return False
-
     # checking all upper-left diagonals until we reach the border
     i, j = r_idx, c_idx
     while i > 0 and j > 0:
@@ -18,7 +10,6 @@ def is_safe(board, r_idx, c_idx):
             return False
         i -= 1
         j -= 1
-
     # check all lower-left diagonals until we reach the bottom border
     i, j = r_idx, c_idx
     while i < n-1 and j > 0:
@@ -37,46 +28,33 @@ def generate_empty_board(n):
     return board
 
 
-def print_board(board):
-    # since the board is squared, we can just take the len of the first row
-    n = len(board[0])
-
+def print_board(board, n):
     print('_' * (2*n+1))
     for row in board:
         print('|' + '|'.join(str(x) for x in row).replace('0', ' ').replace('1', 'Q') + '|')
     print('\u203e' * (2 * n + 1))
 
 
-def disable_unsafe_cells_in_board(board, row_idx, col_idx):
-    n = len(board[0])
-    for attack in get_all_attacking_moves(n, row_idx, col_idx):
-        for k in attack.keys():
-            board[k][attack[k]] = -1
-
-
-def get_all_attacking_moves(n, row_idx, col_idx):
-    attacking_moves = []
-    # calc all attacking positions from this queen on the upper-right diagonal
+def disable_unsafe_cells_in_board(board, n, row_idx, col_idx):
+    # set all attacking positions from this queen on the upper-right diagonal
     i, j = row_idx, col_idx
-    while i > 0 and j < n-1:
-        attacking_moves.append(dict([(i-1, j+1)]))
+    while i > 0 and j < n - 1:
+        board[i-1][j+1] = -1
         i -= 1
         j += 1
 
-    # calc all attacking positions from the queen on the lower-right diagonal
+    # set all attacking positions from the queen on the lower-right diagonal
     i, j = row_idx, col_idx
     while i < n - 1 and j < n - 1:
-        attacking_moves.append(dict([(i + 1, j + 1)]))
+        board[i + 1][j + 1] = -1
         i += 1
         j += 1
 
     # calc all attacking positions in the same row (to the right)
     j = col_idx
     while j < n - 1:
-        attacking_moves.append(dict([(row_idx, j+1)]))
+        board[row_idx][j+1] = -1
         j += 1
-
-    return attacking_moves
 
 
 def clear_board_from_attacks(board):
